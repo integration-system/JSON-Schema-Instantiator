@@ -135,6 +135,7 @@ function findDefinition(schema, ref) {
  * The main function.
  * Calls sub-objects recursively, depth first, using the sub-function 'visit'.
  * @param schema - The schema to instantiate.
+ * @param options - {defaultArrayMinItems, requiredPropertiesOnly}
  * @returns {*}
  */
 function instantiate(schema, options) {
@@ -179,6 +180,9 @@ function instantiate(schema, options) {
       var len = 0;
       if (obj.minItems || obj.minItems > 0) {
         len = obj.minItems;
+      }
+      if (!len && options.defaultArrayMinItems) {
+        len = options.defaultArrayMinItems;
       }
 
       // Instantiate 'len' items.
